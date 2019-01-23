@@ -13,7 +13,8 @@ block content
     tbody
       each movie in movies
         tr
-          td= movie.title
+          td
+            a(href="/movies/edit/#{movie._id}") #{movie.title}
           td= movie.release_date
           td= movie.imdb_rating
           td
