@@ -10,6 +10,7 @@ block content
       th imdb rating
       th actors
       th runtime
+      th
     tbody
       each movie in movies
         tr
@@ -19,3 +20,5 @@ block content
           td= movie.imdb_rating
           td
           td= movie.runtime
+          td
+            a(href="/movies/delete/#{movie._id}") Delete

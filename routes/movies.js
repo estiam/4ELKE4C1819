@@ -3,9 +3,6 @@ var router = express.Router();
 const mongoose = require('mongoose');
 const Movies = mongoose.model('Movie');
 
-// https://github.com/estiam/4ELKE4C1819
-
-
 /* GET home page. */
 router.get('/', function (req, res, next) {
   Movies.find({}, (err, items) => {
@@ -16,6 +13,13 @@ router.get('/', function (req, res, next) {
 
   });
 });
+
+router.get('/search', function (req, res, next) {
+  Movies.search({ 'query_string' : { 'query' : req.query.q } }, (err, items) => {
+    res.json(err ? err : items);
+  });
+});
+
 
 router.get('/create', (req, res, next) => {
   res.render('create');
@@ -50,7 +54,14 @@ router.post('/edit/:id', (req, res, next) => {
   });
 });
 
+router.get('/delete/:id', (req, res, next) => {
+  Movies.findByIdAndRemove(req.params.id, (err, item) => {
+    if (err)
+      return res.send(err);
 
+    return res.redirect('/movies');
+  });
+});
 
 
 
